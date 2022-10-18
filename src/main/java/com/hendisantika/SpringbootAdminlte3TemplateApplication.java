@@ -9,5 +9,4 @@ public class SpringbootAdminlte3TemplateApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringbootAdminlte3TemplateApplication.class, args);
     }
-
 }

@@ -1,0 +1,56 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="shared/layout">
+<head>
+    <title>Clients</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <h1>Nationalités</h1>
+<ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li class="active">Liste des Nationalités</li>
+</ol>
+</section>
+<div layout:fragment="content">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Liste des Nationalités</h3>
+            <div class="box-tools pull-right">
+                <a href="/personne/add" type="button" class="btn btn-box-tool"><i class="fa fa-plus"></i></a>
+                <br clear="all" />
+            </div>
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Libellé</th>
+                    <th>Action</th>
+                    
+                </tr>
+                <tr th:each="aNationalite : ${listNationalites}">
+                    <td th:text="${aNationalite.id}"></td>
+                    <td th:text="${aNationalite.libelle}"></td>
+                    <td>
+                        <a th:href="${'/parametre/nationalite/edit/' + aNationalite.id}">Modifier</a> |
+                        <a th:href="${'/parametre/nationalite/delete/' + aNationalite.id}">Supprimer</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+            <ul class="pagination pagination-sm no-margin pull-right">
+                <li><a href="/parametre/nationalite/1"><i class="fa fa-fast-backward" aria-hidden="true"></i>
+                </a></li>
+                <li th:each="p : ${#numbers.sequence(1, endIndex/beginIndex)}" th:class="${p == currentIndex} ? 'active' : ''">
+                    <a th:href="${'/parametre/nationalite/' + p}" th:text="${p}"></a>
+                </li>
+                <li><a th:href="${'/parametre/nationalite/' + endIndex}"><i class="fa fa-fast-forward" aria-hidden="true"></i>
+                </a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>

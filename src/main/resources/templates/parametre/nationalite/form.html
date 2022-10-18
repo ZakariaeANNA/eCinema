@@ -1,0 +1,44 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="shared/layout">
+<head>
+<title>Traitement d'une Nationalité</title>
+</head>
+<body>
+	<section layout:fragment="header">
+		<h1>Traitement d'une Nationalité</h1>
+		<ol class="breadcrumb">
+			<li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+			<li class="active">Ajouter Nationalité</li>
+		</ol>
+	</section>
+	<div layout:fragment="content">
+		<div class="box p-4">
+			<div class="box-header with-border">
+				<h3 class="box-title">Formulaire d'ajout/Modification</h3>
+				<div class="box-tools pull-right">
+					<a href="/personne" type="button" class="btn btn-box-tool"><i
+						class="fa fa-list-ul"></i></a>
+				</div>
+			</div>
+			<form data-toggle="validator" role="form" th:object="${nationalite}"
+				th:action="@{/parametre/nationalite/save}" method="post">
+				<div class="box-body">
+					<input type="hidden" th:field="*{id}" />
+
+					<div class="form-group">
+						<label for="libelle">Libellé</label>
+						<input type="text"
+							required="true" class="form-control" th:field="*{libelle}"
+							id="libelle" />
+					</div>
+				</div>
+				<div class="box-footer">
+					<button class="btn btn-primary" type="submit">Enregistrer</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

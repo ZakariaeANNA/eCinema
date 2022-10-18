@@ -1,0 +1,80 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout">
+<head>
+    <title>Liste des Acteurs/Réalisateurs</title>
+    <script type="text/javascript" src="../../dist/js/angular.min.js"></script>
+    
+   <script type="text/javascript">
+var myApp = angular.module('myApp',[]);
+myApp.controller("personneCtrl", function($scope,$http){
+	console.log('Starting....')
+	$scope.allPersons = [];
+	$http(
+		    {
+		       method: 'GET',
+		       url: '/personne/NG/listp',  
+		    }).then(function successCallback(response) {
+		    	$scope.allPersons = response.data;
+				console.log($scope.allPersons);
+
+		    }, function errorCallback(response) {
+		    	console.log('Error....');
+		    	console.log(response);
+		});
+// 	$http.get("/personne/NG/listp").success(function(data) {
+// 		$scope.allPersons = data.data;
+// 		console.log($scope.allPersons);
+// 	});
+});
+</script>
+</head>
+<body>
+<section layout:fragment="header">
+    <h1>Clients</h1>
+<ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li class="active">Liste des Acteurs/Réalisateurs</li>
+</ol>
+</section>
+<div layout:fragment="content">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Liste AngularJS des Acteurs/Realisateurs</h3>
+            <div class="box-tools pull-right">
+                <a href="/personne/add" type="button" class="btn btn-box-tool"><i class="fa fa-plus"></i></a>
+                <br clear="all" />
+            </div>
+        </div>
+        <div class="box-body no-padding" ng-app="myApp" ng-controller="personneCtrl">
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Type</th>
+                    <th>Nom & preanom</th>
+                    <th>Nationalite</th>
+                    <th>Date de naissance</th>
+                    <th>Registration Date</th>
+                    <th>Action</th>
+                    
+                </tr>
+                <tr ng-repeat="aPerson in allPersons">
+                    <td>{{aPerson.id}}</td>
+                    <td>{{aPerson.typePersonne}}</td>
+                    <td>{{aPerson.nom}} {{aPerson.prenom}}</td>
+                    <td>{{aPerson.nationalite.libelle}}</td>
+                    <td>{{aPerson.dateNaissance | date:'dd-MM-yyyy'}}</td>
+                    <td>{{aPerson.addedDate | date:'dd-MM-yyyy'}}</td>
+                    <td>
+                        <a href="/personne/edit/{{aPerson.id}}">Modifier</a> |
+                        <a href="/personne/delete/{{aPerson.id}}">Supprimer</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</div>
+
+</body>
+</html>

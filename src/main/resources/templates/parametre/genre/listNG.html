@@ -1,0 +1,86 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="layout" >
+<head>
+    <title>Clients</title>
+<!--     <script type="text/javascript" src="../../dist/js/angular.min.js"></script> -->
+<!--     <link rel="stylesheet" href="https://cdn.rawgit.com/angular-ui/ -->
+<!--           bower-ui-grid/master/ui-grid.min.css"> -->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+<!--         <script src="https://cdn.rawgit.com/angular-ui/bower-ui-grid/ -->
+<!--           master/ui-grid.min.js"></script> -->
+<!--         <script src="view/app.js"></script> -->
+    
+    <script type="text/javascript">
+		var myApp = angular.module('myApp',[]);
+		myApp.controller("parametreCtrl", function($scope,$http){
+			console.log('Starting....');
+			$scope.allGenres = [];
+			$http(
+		    	{
+		       		method: 'GET',
+		       		url: '/parametre/genreNG/listGenre',  
+		    	}).then(function successCallback(response) {
+		    		$scope.allGenres = response.data;
+		    		console.log('Data received....')
+					console.log($scope.allGenres);
+		    	}, function errorCallback(response) {
+		    		console.log('Error....');
+		    		console.log(response);
+				});
+	});
+</script>
+    
+</head>
+<body>
+<section layout:fragment="header">
+    <h1>Clients</h1>
+<ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li class="active">Liste des Genres</li>
+</ol>
+</section>
+<div layout:fragment="content">
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Liste AngularJS des Genres des Films</h3>
+            <div class="box-tools pull-right">
+                <a href="/parametre/genre/add" type="button" class="btn btn-box-tool"><i class="fa fa-plus"></i></a>
+                <br clear="all" />
+            </div>
+        </div>
+        <div class="box-body no-padding" ng-app="myApp" ng-controller="parametreCtrl">
+            <table class="table table-striped">
+                <tr>
+                    <th>ID</th>
+                    <th>Libelle</th>
+                    <th>Action</th>
+                    
+                </tr>
+                <tr ng-repeat="aGenre in allGenres">
+                    <td>{{aGenre.id}}</td>
+                    <td>{{aGenre.libelle}}</td>
+                    <td>
+                        <a href="/parametre/genre/edit/{{aGenre.id}}">Modifier</a> |
+                        <a href="/parametre/genre/delete/{{aGenre.id}}">Supprimer</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+    <div class="box-footer clearfix">
+            <ul class="pagination pagination-sm no-margin">
+                <li><a href="/parametre/nationalite/1"><i class="fa fa-fast-backward" aria-hidden="true"></i>
+                </a></li>
+                <li th:each="p : ${#numbers.sequence(1, endIndex/beginIndex)}" th:class="${p == currentIndex} ? 'active' : ''">
+                    <a th:href="${'/parametre/nationalite/' + p}" th:text="${p}"></a>
+                </li>
+                <li><a th:href="${'/parametre/nationalite/' + endIndex}"><i class="fa fa-fast-forward" aria-hidden="true"></i>
+                </a></li>
+            </ul>
+        </div>
+</div>
+
+</body>
+</html>

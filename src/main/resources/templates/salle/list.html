@@ -1,0 +1,29 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="shared/layout" >
+<head>
+		<script type="text/javascript" src="/app/SalleController.js" ></script>	
+
+</head>
+<body>
+
+	<section layout:fragment="header">
+		<h1>Salles</h1>
+		<ol class="breadcrumb">
+			<li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+			<li class="active">Salles</li>
+		</ol>
+	</section>
+	<div layout:fragment="content">
+
+		<div ng-app="theApp" ng-controller="salleCtrl">
+			<div ui-grid="gridOptions" class="grid" ui-grid-pagination>
+		</div>
+		</div>
+	</div>
+	
+		
+</body>
+
+</html>

@@ -1,0 +1,144 @@
+<!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar" th:fragment="sidebar">
+       <ul class="sidebar-menu">
+		<li class="active treeview">
+			<a href="#">
+				<i	class="fa fa-dashboard"></i><span>Dashboard</span>
+			</a>
+		</li>
+		<li class="treeview">
+			<a href="#"> 
+				<i class="fa fa-users"></i> <span>Registration</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+			<ul class="treeview-menu">
+				<li>
+					<a href="/customers/add">
+						<i class="fa fa-plus"></i> Add Customers
+					</a>
+				</li>
+			</ul>
+			<ul class="treeview-menu">
+				<li>
+					<a href="/customers">
+						<i class="fa fa-list"></i>List Customers
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li class="treeview">
+			<a href="#">
+				<i class="fa fa-user"></i> <span>Acteurs/Realisateurs</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+			<ul class="treeview-menu">
+				<li>
+					<a href="/personne/add">
+						<i class="fa fa-plus"></i>
+						Ajouter Acteurs/Realisateurs
+					</a>
+				</li>
+			</ul>
+			<ul class="treeview-menu">
+				<li>
+					<a href="/personne">
+						<i class="fa fa-list"></i>
+						Liste des Acteurs/Realisateurs
+					</a>
+				</li>
+			</ul>
+			<ul class="treeview-menu">
+				<li>
+					<a href="/personne/show/list">
+						<i class="fa fa-list"></i>
+						Liste NG des Acteurs/Realisateurs
+					</a>
+				</li>
+			</ul>
+		</li>
+		<li class="treeview">
+			<a href="#">
+				<i class="fa fa-building"></i> <span>Salles</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+			<ul class="treeview-menu">
+				<li>
+					<a href="/salle/add">
+						<i class="fa fa-plus"></i>
+						Ajouter Salle
+					</a>
+				</li>
+			</ul>
+			<ul class="treeview-menu">
+				<li>
+					<a href="/salle">
+						<i class="fa fa-list"></i>
+						Liste des Salles
+					</a>
+				</li>
+			</ul>
+			<ul class="treeview-menu">
+				<li>
+					<a href="/personne/show/list">
+						<i class="fa fa-list"></i>
+						Liste NG des Acteurs/Realisateurs
+					</a>
+				</li>
+			</ul>
+		</li>
+		 <li class="treeview">
+			<a href="#">
+				<i class="fa fa-cogs"></i>
+				<span>Paramaètres</span>
+				<i class="fa fa-angle-left pull-right"></i>
+			</a>
+			<ul class="treeview-menu">
+                <li class="treeview">
+				    <a href="#"> 
+					    <i class="fa fa-globe"></i>
+					    <span>Nationalités</span>
+					    <i class="fa fa-angle-left pull-right"></i>
+				    </a>
+                    <ul class="treeview-menu">
+                         <li class="treeview">
+                            <a href="/parametre/nationalite/action/add">
+						        <i class="fa fa-plus"></i>
+						        <span>Ajouter Nationalité</span>
+					        </a>
+                         </li>
+                         <li class="treeview">
+                            <a href="/parametre/nationalite/1">
+						        <i class="fa fa-list"></i>
+						        <span>Liste des Nationalités</span>
+					        </a>
+                         </li>
+                    </ul>
+                  </li>
+			</ul>
+			<ul class="treeview-menu">
+                <li class="treeview">
+				    <a href="#"> 
+					    <i class="fa fa-file-video-o"></i>
+					    <span>Genre</span>
+					    <i class="fa fa-angle-left pull-right"></i>
+				    </a>
+                    <ul class="treeview-menu">
+                         <li class="treeview">
+                            <a href="/parametre/genre/action/add">
+						        <i class="fa fa-plus"></i>
+						        <span>Ajouter Genre</span>
+					        </a>
+                         </li>
+                         <li class="treeview">
+                            <a href="/parametre/genreNG/1">
+						        <i class="fa fa-list"></i>
+						        <span>Liste des Genres</span>
+					        </a>
+                         </li>
+                    </ul>
+                  </li>
+			</ul>
+		</li>
+	</ul>
+    </section>
+<!-- /.sidebar -->
