@@ -88,8 +88,9 @@ public class SalleController {
 	}
 
 	@GetMapping("/show/list")
-	public String showSalles() {
-
+	public String showSalles(Model model) {
+		List<Salle> lesSalles = salleService.getListAll();
+		model.addAttribute("listSalles",lesSalles);
 		return "/salle/list";
 
 	}
