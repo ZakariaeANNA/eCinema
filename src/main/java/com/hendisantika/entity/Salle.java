@@ -33,6 +33,9 @@ public class Salle extends AbstractModel<Long>{
     @JsonIgnore
 	private List<Seance> seances;
 
+    @Column
+    private String nomSalle;
+    
     @Column(name = "added_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
     private Date addedDate;
 }
