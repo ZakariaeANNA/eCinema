@@ -3,22 +3,22 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="shared/layout">
 <head>
-<title>Traitement d'une Genre</title>
+<title>Gender Treatment</title>
 </head>
 <body>
 	<section layout:fragment="header">
-		<h1>Traitement d'un Genre</h1>
+		<h1>Gender Treatment</h1>
 		<ol class="breadcrumb">
 			<li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-			<li class="active">Ajouter Genre</li>
+			<li class="active">Add Genre</li>
 		</ol>
 	</section>
 	<div layout:fragment="content">
 		<div class="box p-4">
 			<div class="box-header with-border">
-				<h3 class="box-title">Formulaire d'ajout/Modification</h3>
+				<h3 class="box-title">Add/Edit Form</h3>
 				<div class="box-tools pull-right">
-					<a href="/personne" type="button" class="btn btn-box-tool"><i
+					<a href="/film" type="button" class="btn btn-box-tool"><i
 						class="fa fa-list-ul"></i></a>
 				</div>
 			</div>
@@ -28,14 +28,14 @@
 					<input type="hidden" th:field="*{id}" />
 
 					<div class="form-group">
-						<label for="libelle">Libellé</label>
+						<label for="libelle">Wording</label>
 						<input type="text"
 							required="true" class="form-control" th:field="*{libelle}"
 							id="libelle" />
 					</div>
 				</div>
 				<div class="box-footer">
-					<button class="btn btn-primary" type="submit">Enregistrer</button>
+					<button class="btn btn-primary" type="submit">Register</button>
 				</div>
 			</form>
 		</div>
