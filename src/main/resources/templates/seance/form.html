@@ -1,0 +1,127 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="shared/layout">
+<head>
+<title>Add Movies</title>
+</head>
+<body>
+	<section layout:fragment="header">
+		<h1>Add a Movie</h1>
+		<ol class="breadcrumb">
+			<li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+			<li class="active">Add a Movie</li>
+		</ol>
+	</section>
+	<div layout:fragment="content">
+		<div class="box p-4">
+			<div class="card card-info">
+				<div class="card-header">
+					<h3 class="card-title">Add - Edit Seance</h3>
+				</div>
+				<div class="card-body">
+					<form data-toggle="validator" role="form" th:object="${seance}"
+						th:action="@{/seance/save}" method="post"
+						enctype="multipart/form-data">
+						<input type="hidden" th:field="*{id}" />
+						<div class="form-group">
+							<label>Movie : </label> <select th:field="*{film}"
+								class="form-control select2bs4 select2-hidden-accessible"
+								style="width: 100%;" data-select2-id="17" tabindex="-1"
+								aria-hidden="true">
+								<option data-select2-id="73" th:each="afilm : ${lesFilms}"
+									th:text="${afilm.titre}" th:value="${afilm.id}"></option>
+							</select><span
+								class="select2 select2-container select2-container--bootstrap4 select2-container--below select2-container--focus"
+								dir="ltr" data-select2-id="18" style="width: 100%;"><span
+								class="selection"><span
+									class="select2-selection select2-selection--single"
+									role="combobox" aria-haspopup="true" aria-expanded="false"
+									tabindex="0" aria-disabled="false"
+									aria-labelledby="select2-go1i-container"><span
+										class="select2-selection__arrow" role="presentation"><b
+											role="presentation"></b></span></span></span><span class="dropdown-wrapper"
+								aria-hidden="true"></span></span>
+						</div>
+						<div class="form-group">
+							<label>Room : </label> <select
+								class="form-control select2bs4 select2-hidden-accessible"
+								style="width: 100%;" data-select2-id="17" tabindex="-1"
+								th:field="*{salle}" aria-hidden="true">
+								<option data-select2-id="73" th:each="asalle : ${lesSalles}"
+									th:text="${asalle.nomSalle}" th:value="${asalle.id}"></option>
+							</select><span
+								class="select2 select2-container select2-container--bootstrap4 select2-container--below select2-container--focus"
+								dir="ltr" data-select2-id="18" style="width: 100%;"><span
+								class="selection"><span
+									class="select2-selection select2-selection--single"
+									role="combobox" aria-haspopup="true" aria-expanded="false"
+									tabindex="0" aria-disabled="false"
+									aria-labelledby="select2-go1i-container"><span
+										class="select2-selection__arrow" role="presentation"><b
+											role="presentation"></b></span></span></span><span class="dropdown-wrapper"
+								aria-hidden="true"></span></span>
+						</div>
+						<div class="form-group">
+							<label>Date de projection : </label>
+							<div class="input-group date" id="reservationdate"
+								data-target-input="nearest">
+								<input type="text" th:field="*{dateProjection}"
+									class="form-control datetimepicker-input"
+									data-target="#reservationdate">
+								<div class="input-group-append" data-target="#reservationdate"
+									data-toggle="datetimepicker">
+									<div class="input-group-text">
+										<i class="fa fa-calendar"></i>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="bootstrap-timepicker">
+							<div class="form-group">
+								<label>Heure de debut : </label>
+								<div class="input-group date" id="timepicker"
+									data-target-input="nearest">
+									<input type="text" th:field="*{heureDebut}"
+										class="form-control datetimepicker-input"
+										data-target="#timepicker">
+									<div class="input-group-append" data-target="#timepicker"
+										data-toggle="datetimepicker">
+										<div class="input-group-text">
+											<i class="far fa-clock"></i>
+										</div>
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+						<div class="bootstrap-timepicker">
+							<div class="form-group">
+								<label>Heure de fin : </label>
+								<div class="input-group date" id="timepickerfin"
+									data-target-input="nearest">
+									<input type="text" th:field="*{heureFin}"
+										class="form-control datetimepicker-input"
+										data-target="#timepickerfin">
+									<div class="input-group-append" data-target="#timepickerfin"
+										data-toggle="datetimepicker">
+										<div class="input-group-text">
+											<i class="far fa-clock"></i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="box-footer">
+							<button class="btn btn-primary" type="submit">Enregistrer</button>
+						</div>
+					</form>
+				</div>
+				<!--  -->
+			</div>
+		</div>
+	</div>
+	<script th:src="@{/js/datetime.js}"></script>
+</body>
+</html>
