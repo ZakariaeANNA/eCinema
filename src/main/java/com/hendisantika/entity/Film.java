@@ -57,6 +57,10 @@ public class Film extends AbstractModel<Long> {
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "FILM_ACTEUR", joinColumns = @JoinColumn(name = "ACTOR_ID", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "FILM_ID", referencedColumnName = "ID"))
 	private List<Personne> acteurs;
+	
+	@OneToMany(mappedBy = "film")
+	@JsonIgnore
+	private List<Media> medias;
 
 	@OneToMany(mappedBy = "film")
 	@JsonIgnore
