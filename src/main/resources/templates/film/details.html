@@ -128,6 +128,10 @@
 												</div>
 											</div>
 											<div class="tab-pane" id="albums">
+												<div class="text-right py-2">
+													<a type="button" class="btn btn-danger" th:href="${'/film/album/delete/' + film.id}">Delete From Album</a>
+													<a type="button" class="btn btn-warning" th:href="${'/film/album/add/' + film.id}">Add To Album</a>
+												</div>
 												<div id="carouselExampleControls" class="carousel slide"
 													data-ride="carousel">
 													<div class="carousel-inner">

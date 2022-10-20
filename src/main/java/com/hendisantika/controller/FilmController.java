@@ -88,10 +88,52 @@ public class FilmController {
 		model.addAttribute("beginIndex", begin);
 		model.addAttribute("endIndex", end);
 		model.addAttribute("currentIndex", current);
-
 		return "film/list";
 
 	}
+	
+	@GetMapping(value = "/album/delete/{id}")
+	public String list(@PathVariable("id") long id,Model model) {
+		List<Media> medias = filmService.get(id).getMedias();
+		model.addAttribute("medias",medias);
+		return "film/deletealbum";
+
+	}
+	
+	@GetMapping(value = "/album/add/{id}")
+	public String add(@PathVariable("id") long id,Model model) {
+		Film film = filmService.get(id);
+		model.addAttribute("film",film);
+		return "film/addalbum";
+
+	}
+	
+	@GetMapping(value = "/delete/media/{id}")
+	public String mediaDelete(@PathVariable("id") long id) {
+		mediaService.deleteMediaById(id);
+		return "redirect:/film";
+	}
+	
+	@PostMapping(value = "/add/media")
+	public String mediaAdd(@RequestParam("album") MultipartFile[] albums, @RequestParam("id") String id) {
+		Film film = filmService.get(Long.valueOf(id));
+		for( int i = 0 ; i < albums.length ; i++ ) {
+			if (!albums[i].isEmpty()) {
+				Media media = new Media();
+				// normalize the file path
+				String fileName = StringUtils.cleanPath(albums[i].getOriginalFilename());
+				String uuid = UUID.randomUUID().toString();
+				String uploadDir = "albums\\";
+				FileUploadUtil.saveFile(uploadDir, uuid + fileName, albums[i]);
+				media.setTypeMedia(TypeMedia.IMAGE); 
+				media.setMedia("/photos/albums/" + uuid + fileName);
+				media.setFilm(film);
+				mediaService.save(media);
+			}
+		}
+		return "redirect:/film";
+	}
+	
 
 	@GetMapping("/add")
 	public String add(Model model) {
@@ -135,16 +177,25 @@ public class FilmController {
 	@PostMapping(value = "/save")
 	public String save(@RequestParam("file") MultipartFile file, @RequestParam("album") MultipartFile[] albums, Film film,@RequestParam("acteur") String acteur,final RedirectAttributes ra) {
 		List<Media> medias = new ArrayList<Media>();
-		if (!file.isEmpty()) {
-			// normalize the file path
-			String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-			String uuid = UUID.randomUUID().toString();
-			String uploadDir = "covers\\";
-			FileUploadUtil.saveFile(uploadDir, uuid + fileName, file);
-			film.setCover("/photos/covers/" + uuid + fileName);
+		if((film.getId() == null || film.getId() != null) && !file.isEmpty()) {
+				// normalize the file path
+				String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+				String uuid = UUID.randomUUID().toString();
+				String uploadDir = "covers\\";
+				FileUploadUtil.saveFile(uploadDir, uuid + fileName, file);
+				film.setCover("/photos/covers/" + uuid + fileName);
+		}else if(film.getId() != null && file.isEmpty()){
+			film.setCover(filmService.get(film.getId()).getCover());
 		}
-		List<Personne> acteurs = AddActors.stringToPersonne(acteur,personneService);
-		film.setActeurs(acteurs);
+		if(film.getId() == null) {
+			List<Personne> acteurs = AddActors.stringToPersonne(acteur,personneService);
+			film.setActeurs(acteurs);
+		}else if(acteur != null && film.getId() != null){
+			List<Personne> acteurs = filmService.get(film.getId()).getActeurs();
+			acteurs.addAll(AddActors.stringToPersonne(acteur,personneService));
+			film.setActeurs(acteurs);
+		}
+		
 		Film save = filmService.save(film);
 		for( int i = 0 ; i < albums.length ; i++ ) {
 			if (!albums[i].isEmpty()) {
@@ -182,9 +233,9 @@ public class FilmController {
 	}
 	
 	@GetMapping("/{idFilm}/actor/delete/{idActor}")
-	public String deleteActor(@PathVariable("idActor") long idActor,@RequestParam("idFilm") long idFilm) {
+	public String deleteActor(@PathVariable("idActor") long idActor,@PathVariable("idFilm") long idFilm) {
 		filmService.deleteActorFromFilm(idActor, idFilm);
-		return "film/detail/:"+idFilm;
+		return "film/list";
 	}
     
     @GetMapping("/details/{id}")

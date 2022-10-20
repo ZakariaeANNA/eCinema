@@ -19,5 +19,9 @@ public class MediaService extends AbstractService<Media, Long>{
     protected JpaRepository<Media, Long> getRepository() {
         return mediaRepository;
     }
+    
+    public void deleteMediaById(long id) {
+    	mediaRepository.deleteById(id);
+    }
 
 }

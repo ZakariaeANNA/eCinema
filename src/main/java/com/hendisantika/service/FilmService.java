@@ -1,6 +1,7 @@
 package com.hendisantika.service;
 
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +26,12 @@ public class FilmService extends AbstractService<Film, Long> {
     
     public void deleteActorFromFilm(long idActor,long idFilm) {
     	Optional<Film> film = filmRepository.findById(idFilm);
-    	List<Personne> users = (List<Personne>) film.get().getActeurs().stream().filter(u -> u.getId() != idActor);    	
+    	List<Personne> users = new ArrayList<Personne>();
+    	film.get().getActeurs().stream()
+    		.filter(u -> u.getId() != idActor)
+    		.forEach(user ->{
+    			users.add(user);
+    		});
         film.get().setActeurs(users);
         filmRepository.save(film.get());
 //    	group.getUsers().forEach(u -> u.getGroups().remove(group));

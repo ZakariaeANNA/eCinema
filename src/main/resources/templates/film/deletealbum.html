@@ -1,0 +1,50 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="shared/layout">
+<head>
+<title>Details Actor - Director</title>
+</head>
+<body>
+	<section layout:fragment="header">
+		<h1>Delete from album</h1>
+		<ol class="breadcrumb">
+			<li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+			<li class="active"></li>
+		</ol>
+	</section>
+	<section class="content">
+		<div layout:fragment="content" class="p-5">
+			<div class="card">
+				<div class="card-header">
+					<h3 class="card-title">Album</h3>
+				</div>
+
+				<div class="card-body">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<th style="width: 10px">#</th>
+								<th>File</th>
+								<th>Action</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="media : ${medias}">
+								<td th:text="${media.id}"></td>
+								<td>
+									<img class="d-block w-100" alt="First slide" th:src="@{${media.media}}">
+								</td>
+								<td>
+									<a type="button" class="btn btn-danger" th:href="${'/film/delete/media/'+ media.id}">Delete</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Section content -->
+</body>
+</html>
