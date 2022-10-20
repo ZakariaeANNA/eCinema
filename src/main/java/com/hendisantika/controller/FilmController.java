@@ -175,7 +175,7 @@ public class FilmController {
 	}
 
 	@PostMapping(value = "/save")
-	public String save(@RequestParam("file") MultipartFile file, @RequestParam("album") MultipartFile[] albums, Film film,@RequestParam("acteur") String acteur,final RedirectAttributes ra) {
+	public String save(@RequestParam("file") MultipartFile file, @RequestParam("album") MultipartFile[] albums, Film film,final RedirectAttributes ra) {
 		List<Media> medias = new ArrayList<Media>();
 		if((film.getId() == null || film.getId() != null) && !file.isEmpty()) {
 				// normalize the file path
@@ -187,15 +187,6 @@ public class FilmController {
 		}else if(film.getId() != null && file.isEmpty()){
 			film.setCover(filmService.get(film.getId()).getCover());
 		}
-		if(film.getId() == null) {
-			List<Personne> acteurs = AddActors.stringToPersonne(acteur,personneService);
-			film.setActeurs(acteurs);
-		}else if(acteur != null && film.getId() != null){
-			List<Personne> acteurs = filmService.get(film.getId()).getActeurs();
-			acteurs.addAll(AddActors.stringToPersonne(acteur,personneService));
-			film.setActeurs(acteurs);
-		}
-		
 		Film save = filmService.save(film);
 		for( int i = 0 ; i < albums.length ; i++ ) {
 			if (!albums[i].isEmpty()) {
