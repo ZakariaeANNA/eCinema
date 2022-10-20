@@ -1,0 +1,68 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="shared/layout">
+<head>
+    <title>Aflami - افلامي | Movies</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <h1>Movies</h1>
+<ol class="breadcrumb">
+    <li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+    <li class="active">Movies List</li>
+</ol>
+</section>
+<div layout:fragment="content">
+    <div class="box p-4">
+        <div class="box-header with-border">
+            <h3 class="box-title">Movies List</h3>
+            <div class="box-tools pull-right">
+                <a href="/film/add" type="button" class="btn btn-box-tool"><i class="fa fa-plus"></i></a>
+                <br clear="all" />
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Gender</th>
+                    <th>Nationality</th>
+                    <th>Director</th>
+                    <th>Duration</th>
+                    <th>Year</th>
+                    <th>Action</th>
+                </tr>
+                <tr th:each="afilm : ${listFilm}">
+                    <td th:inline="text">
+                    	[[${afilm.id}]]
+                    	<a th:href="${'/film/details/' + afilm.id}">
+                    		<i class="fa fa-info-circle"></i>
+                    	</a>           	  	
+                    </td>
+                    <td th:text="${afilm.titre}"></td>
+                    <td th:text="${afilm.genre.libelle}"></td>
+                    <td th:text="${afilm.nationalite.libelle}"></td>
+                    <td th:text="${afilm.realisateur.prenom+' '+afilm.realisateur.nom}"></td>
+                    <td th:text="${afilm.duree}"></td>
+                     <td th:text="${afilm.annee}"></td>
+                    <td>
+                        <a th:href="${'/film/edit/' + afilm.id}"><i class="fa fa-edit"></i></a> |
+                        <a th:href="${'/film/delete/' + afilm.id}"><i class="fa fa-trash"></i></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="box-footer clearfix">
+            <ul class="pagination pagination-sm no-margin pull-right">
+                <li><a href="/film/1"><i class="fa fa-fast-backward"></i></a></li>
+                <li th:each="f : ${#numbers.sequence(1, endIndex/beginIndex)}" th:class="${f == currentIndex} ? 'active' : ''">
+                    <a th:href="${'/film/' + f}" th:text="${f}"></a>
+                </li>
+                <li><a th:href="${'/film/' + endIndex}"><i class="fa fa-fast-forward"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
