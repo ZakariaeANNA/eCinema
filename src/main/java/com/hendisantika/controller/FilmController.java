@@ -22,10 +22,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.hendisantika.entity.Film;
 import com.hendisantika.entity.Genre;
+import com.hendisantika.entity.Media;
+import com.hendisantika.entity.Media.TypeMedia;
 import com.hendisantika.entity.Nationalite;
 import com.hendisantika.entity.Personne;
 import com.hendisantika.service.FilmService;
 import com.hendisantika.service.GenreService;
+import com.hendisantika.service.MediaService;
 import com.hendisantika.service.NationaliteService;
 import com.hendisantika.service.PersonneService;
 import com.hendisantika.util.AddActors;
@@ -39,11 +42,17 @@ public class FilmController {
 	private GenreService genreService;
 	private NationaliteService nationaliteService;
 	private PersonneService personneService;
+	private MediaService mediaService;
 
 	@Autowired
 	public void setFilmService(FilmService filmService) {
 		this.filmService = filmService;
 
+	}
+	
+	@Autowired
+	public void setMediaService(MediaService mediaService) {
+		this.mediaService = mediaService;
 	}
 
 	@Autowired
@@ -123,7 +132,8 @@ public class FilmController {
 	}
 
 	@PostMapping(value = "/save")
-	public String save(@RequestParam("file") MultipartFile file, Film film,@RequestParam("acteur") String acteur,final RedirectAttributes ra) {
+	public String save(@RequestParam("file") MultipartFile file, @RequestParam("album") MultipartFile[] albums, Film film,@RequestParam("acteur") String acteur,final RedirectAttributes ra) {
+		List<Media> medias = new ArrayList<Media>();
 		if (!file.isEmpty()) {
 			// normalize the file path
 			String fileName = StringUtils.cleanPath(file.getOriginalFilename());
@@ -135,6 +145,20 @@ public class FilmController {
 		List<Personne> acteurs = AddActors.stringToPersonne(acteur,personneService);
 		film.setActeurs(acteurs);
 		Film save = filmService.save(film);
+		for( int i = 0 ; i < albums.length ; i++ ) {
+			if (!albums[i].isEmpty()) {
+				Media media = new Media();
+				// normalize the file path
+				String fileName = StringUtils.cleanPath(albums[i].getOriginalFilename());
+				String uuid = UUID.randomUUID().toString();
+				String uploadDir = "albums\\";
+				FileUploadUtil.saveFile(uploadDir, uuid + fileName, albums[i]);
+				media.setTypeMedia(TypeMedia.IMAGE); 
+				media.setMedia("/photos/albums/" + uuid + fileName);
+				media.setFilm(save);
+				mediaService.save(media);
+			}
+		}
 		ra.addFlashAttribute("successFlash", "Film foi salvo com sucesso.");
 		return "redirect:/film";
 
@@ -159,14 +183,18 @@ public class FilmController {
     @GetMapping("/details/{id}")
     public String showDetails(@PathVariable Long id, Model model) {
     	Film film = filmService.get(id);
-    
+    	Personne director = film.getRealisateur();
+    	List<Personne> actors = film.getActeurs(); 
+    	List<Media> medias = film.getMedias();
+    	//film.getRealisateur().getNom()
 		Time date = new Time(film.getDuree()*60*1000);
-		System.out.print(date);
 		String formattedDate = new SimpleDateFormat("HH:mm:ss").format(date);
+		model.addAttribute("medias", medias);
 		model.addAttribute("time",formattedDate);
         model.addAttribute("film",film);
+        model.addAttribute("realisateur",director);
+        model.addAttribute("acteurs",actors);
         return "film/details";
-
     }
 //    @GetMapping("/getrecentmovies")
 //    public String getRecentMovies() {
