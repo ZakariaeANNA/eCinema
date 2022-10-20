@@ -118,6 +118,11 @@
 																	th:text="${#dates.format(acteur.dateNaissance, 'dd/MM/yyyy')}"></a>
 																</li>
 															</ul>
+															<ul class="list-group list-group-unbordered mb-3">
+																<li class="list-group-item">
+																	<a th:href="${'/film/'+ film.id +'/actor/delete/' + acteur.id}">Delete</a>
+																</li>
+															</ul>
 														</div>
 													</div>
 												</div>
