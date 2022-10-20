@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import java.sql.Time;
 
 import com.hendisantika.entity.Film;
 import com.hendisantika.entity.Salle;
@@ -73,15 +76,17 @@ public class SeanceController {
 
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable Long id, Model model) {
-
-		model.addAttribute("personne", seanceService.get(id));
+		List<Salle> lesSalles = salleService.getListAll();
+		List<Film> lesFilms = filmService.getListAll();
+		model.addAttribute("lesFilms", lesFilms);
+		model.addAttribute("lesSalles", lesSalles);
+		model.addAttribute("seance", seanceService.get(id));
 		return "seance/form";
 
 	}
-
+	
 	@PostMapping(value = "/save")
 	public String save(Seance seance, final RedirectAttributes ra) {
-
 		Seance save = seanceService.save(seance);
 		ra.addFlashAttribute("successFlash", "Seance Ajoutée avec succès");
 		return "redirect:/seance";

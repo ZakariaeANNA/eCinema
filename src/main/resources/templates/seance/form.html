@@ -1,3 +1,4 @@
+
 <!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
@@ -82,7 +83,7 @@
 								<label>Heure de debut : </label>
 								<div class="input-group date" id="timepicker"
 									data-target-input="nearest">
-									<input type="text" th:field="*{heureDebut}"
+									<input type="text" name="timedebut" th:field="*{heureDebut}"
 										class="form-control datetimepicker-input"
 										data-target="#timepicker">
 									<div class="input-group-append" data-target="#timepicker"
@@ -122,6 +123,7 @@
 			</div>
 		</div>
 	</div>
-	<script th:src="@{/js/datetime.js}"></script>
+
 </body>
 </html>
+<script th:src="@{/js/datetime.js}"></script>
