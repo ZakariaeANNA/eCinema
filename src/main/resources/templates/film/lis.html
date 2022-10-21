@@ -28,7 +28,7 @@
 							th:classappend="${ afilmStat.index == 0 } ? 'active' : ''">
 							<img class="d-block w-100" alt="First slide"
 								th:src="@{${afilm.cover}}" >
-							<div class="carousel-caption d-none" style="border: 1px solid; padding: 10px; box-shadow: 5px 10px 20px black inset; background-color:black; opacity: 70%;">
+							<div class="carousel-caption d-none d-md-block" style="padding: 10px; box-shadow: 5px 10px 20px black inset; border-color: transparent; background-color:black; opacity: 70%;">
 								<h2 th:text="${afilm.titre}"></h2>
 								<p th:text="${afilm.annee}"></p>
 							</div>
