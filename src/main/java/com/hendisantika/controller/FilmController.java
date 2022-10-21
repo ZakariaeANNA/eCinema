@@ -226,7 +226,7 @@ public class FilmController {
 	@GetMapping("/{idFilm}/actor/delete/{idActor}")
 	public String deleteActor(@PathVariable("idActor") long idActor,@PathVariable("idFilm") long idFilm) {
 		filmService.deleteActorFromFilm(idActor, idFilm);
-		return "redirect:film/details/"+idFilm;
+		return "redirect:/film/details/"+idFilm;
 	}
     
     @GetMapping("/details/{id}")

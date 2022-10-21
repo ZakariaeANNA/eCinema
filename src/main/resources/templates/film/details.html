@@ -32,12 +32,10 @@
 						</div>
 					</div>
 				</section>
-
 				<section class="content">
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-md-3">
-
 								<div class="card card-primary card-outline">
 									<div class="card-body box-profile">
 										<div class="text-center" th:if="${ film.cover == null }">
@@ -66,7 +64,6 @@
 									<div class="card-header">
 										<h3 class="card-title">Director</h3>
 									</div>
-
 									<div class="card-body">
 										<div class="card-body box-profile">
 											<div class="text-center" th:if="${ realisateur.photo == null }">
@@ -91,18 +88,18 @@
 											</ul>
 										</div>
 									</div>
-
 								</div>
-
 							</div>
-
 							<div class="col-md-9">
 								<div class="card">
 									<div class="card-header p-2">
 										<ul class="nav nav-pills">
-											<li class="nav-item"><a class="nav-link active"
-												href="#actors" data-toggle="tab">Actors</a></li>
-											<li class="nav-item"><a class="nav-link" href="#albums"
+											<li class="nav-item">
+												<a class="nav-link active"
+												href="#actors" data-toggle="tab">Actors</a>
+											</li>
+											<li class="nav-item">
+											<a class="nav-link" href="#albums"
 												data-toggle="tab">Albums</a></li>
 										</ul>
 									</div>
@@ -132,8 +129,6 @@
 																	class="float-right"
 																	th:text="${#dates.format(acteur.dateNaissance, 'dd/MM/yyyy')}"></a>
 																</li>
-															</ul>
-															<ul class="list-group list-group-unbordered mb-3">
 																<li class="list-group-item">
 																	<a th:href="${'/film/'+ film.id +'/actor/delete/' + acteur.id}" type="button" class="btn btn-primary w-100">Delete</a>
 																</li>
