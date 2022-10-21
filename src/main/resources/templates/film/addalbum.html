@@ -1,0 +1,41 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="shared/layout">
+<head>
+<title>Add Movies</title>
+<link rel="stylesheet" th:href="@{/css/select2.min.css}">
+<link rel="stylesheet" th:href="@{/css/select2-bootstrap4.min.css}">
+</head>
+<body>
+	<section layout:fragment="header">
+		<h1>Add a Movie</h1>
+		<ol class="breadcrumb">
+			<li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+			<li class="active">Add a Movie</li>
+		</ol>
+	</section>
+	<div layout:fragment="content" class="p-5">
+		<div class="card card-default">
+			<div class="card-header">
+				<h3 class="card-title">Add - Edit Movie</h3>
+			</div>
+			<div class="card-body">
+				<form data-toggle="validator" role="form"
+					  th:action="@{/film/add/media}" method="post"
+					  enctype="multipart/form-data">			
+					<input type="hidden" th:value="${film.id}" name="id" />		
+					<div class="form-group">
+						<label for="photo">Albums</label> <input type="file"
+							class="form-control" name="album" id="photo" multiple />
+						<div th:if="${film.cover == null}">Aucune photo...</div>
+					</div>
+					<button class="btn btn-primary" type="submit">Save</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+

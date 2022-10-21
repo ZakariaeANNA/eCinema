@@ -4,6 +4,8 @@
 	layout:decorate="shared/layout">
 <head>
 <title>Add Movies</title>
+<link rel="stylesheet" th:href="@{/css/select2.min.css}">
+<link rel="stylesheet" th:href="@{/css/select2-bootstrap4.min.css}">
 </head>
 <body>
 	<section layout:fragment="header">
@@ -13,21 +15,17 @@
 			<li class="active">Add a Movie</li>
 		</ol>
 	</section>
-	<div layout:fragment="content">
-		<div class="box p-4">
-			<div class="box-header with-border">
-				<h3 class="box-title">Add - Edit Form</h3>
-				<div class="box-tools pull-right">
-					<a href="/film" type="button" class="btn btn-box-tool"><i
-						class="fa fa-list-ul"></i></a>
-				</div>
+	<div layout:fragment="content" class="p-5">
+		<div class="card card-default">
+			<div class="card-header">
+				<h3 class="card-title">Add - Edit Movie</h3>
 			</div>
-			<form data-toggle="validator" role="form" th:object="${film}"
-				th:action="@{/film/save}" method="post"
-				enctype="multipart/form-data">
-				<div class="box-body">
+			<div class="card-body">
+				<form data-toggle="validator" role="form" th:object="${film}"
+					  th:action="@{/film/save}" method="post"
+					  enctype="multipart/form-data">
+					
 					<input type="hidden" th:field="*{id}" />
-
 					<div class="form-group">
 						<label for="Title">Title</label> <input type="text"
 							required="true" class="form-control" th:field="*{titre}"
@@ -44,49 +42,38 @@
 							id="Year" />
 					</div>
 					<div class="form-group">
-						<label for="director">Director</label> <select
-							th:field="*{realisateur}">
-							<option th:each="realis : ${listerealisateurs}"
-								th:value="${realis.id}"
-								th:text="${realis.nom + ' ' + realis.prenom}"
-								th:selected="(${realisateur} != null)?${realis.id} == ${realis.id} : false">
-							</option>
-						</select>
-					</div>
-					<div class="form-group">
-						<label for="nationalite">Genre</label> <select
+						<label for="genre">Genre</label> <select class="form-control"
 							th:field="*{genre}">
-							<option th:each="gen : ${listegenres}" th:value="${gen.id}"
-								th:text="${gen.libelle}"
-								th:selected="(${genre} != null)?${gen.id} == ${genre.id} : false">
-							</option>
+							<option th:each="g:${listegenres}" th:value="${g.id}"
+								th:text="${g.libelle}" />
 						</select>
 					</div>
 					<div class="form-group">
-						<label for="nationalite">Nationality</label> <select
-							th:field="*{nationalite}">
-							<option th:each="nat : ${listeNationalites}" th:value="${nat.id}"
-								th:text="${nat.libelle}"
-								th:selected="(${nationalite} != null)?${nat.id} == ${nationalite.id} : false">
-							</option>
+						<label for="nationalite">Nationalite</label> <select
+							class="form-control" th:field="*{nationalite}">
+							<option th:each="n:${listeNationalites}" th:value="${n.id}"
+								th:text="${n.libelle}" />
 						</select>
 					</div>
-<!-- 					<div class="form-group">
-						<label for="actor">Actors</label> <select name="acteur"
-							th:field="*{acteurs}">
-							<option th:each="act : ${listActeurs}" th:value="${act.id}"
+					<div class="form-group">
+						<label for="realisateur">Realisateur</label> <select
+							class="form-control" th:field="*{realisateur}">
+							<option th:each="p:${listerealisateurs}" th:value="${p.id}"
+								th:text="${p.nom}+' '+${p.prenom}" />
+						</select>
+					</div>
+					<div class="form-group">
+						<label>Actor</label> <select id="actor" name="acteur" th:field="*{acteurs}"
+							class="select2bs4 select2-hidden-accessible" multiple=""
+							data-placeholder="Select an Actor" style="width: 100%;"
+							data-select2-id="23" tabindex="-1" aria-hidden="true">
+							<option th:each="act : ${listActeurs}" th:value="${{act}}"
 								th:text="${act.prenom +' '+act.nom}"></option>
-						</select>
-					</div> -->
-					<div class="form-group">
-						<label for="actor">Actors</label> 
-						<select id="actor" name="acteur" multiple>
-							<option th:each="act : ${listActeurs}" th:value="${act.id}" th:text="${act.prenom +' '+act.nom}"></option>
 						</select>
 					</div>
 					<div class="form-group">
 						<label for="photo">Picture</label> <input type="file"
-							 class="form-control" name="file" id="photo" />
+							class="form-control" name="file" id="photo" />
 						<div th:if="${film.cover == null}">Aucune photo...</div>
 						<img th:if="${film.cover != null}"
 							class="profile-user-img img-responsive img-circle"
@@ -94,18 +81,20 @@
 					</div>
 					<div class="form-group">
 						<label for="photo">Albums</label> <input type="file"
-							 class="form-control" name="album" id="photo" multiple/>
+							class="form-control" name="album" id="photo" multiple />
 						<div th:if="${film.cover == null}">Aucune photo...</div>
 						<img th:if="${film.cover != null}"
 							class="profile-user-img img-responsive img-circle"
 							th:src="@{*{cover}}" alt="Actor/Director profile picture">
 					</div>
-				</div>
-				<div class="box-footer">
 					<button class="btn btn-primary" type="submit">Save</button>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
 	</div>
 </body>
 </html>
+<script th:src="@{/js/select2.full.min.js}"></script>
+<script th:src="@{/js/select.js}"></script>
+
+

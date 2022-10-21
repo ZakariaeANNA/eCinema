@@ -35,8 +35,7 @@ public class Media extends AbstractModel<Long> {
 	@Column(name = "added_date", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP", insertable = false, updatable = false)
 	private Date addedDate;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name="FILM_ID")
+	@ManyToOne(cascade=CascadeType.PERSIST, fetch = FetchType.LAZY)	@JoinColumn(name="FILM_ID")
 	private Film film;
 
 }
