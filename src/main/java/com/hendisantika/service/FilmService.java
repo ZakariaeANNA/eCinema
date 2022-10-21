@@ -35,5 +35,8 @@ public class FilmService extends AbstractService<Film, Long> {
         film.get().setActeurs(users);
         filmRepository.save(film.get());
     }
+    public List<Film> getBytitre() {
+        return filmRepository.findByOrderByAddedDateDesc();
+    }
 
 }
