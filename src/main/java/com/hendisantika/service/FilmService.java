@@ -34,9 +34,6 @@ public class FilmService extends AbstractService<Film, Long> {
     		});
         film.get().setActeurs(users);
         filmRepository.save(film.get());
-//    	group.getUsers().forEach(u -> u.getGroups().remove(group));
-//        userRepository.saveAll(group.getUsers());
-//        groupRepository.delete(group);
     }
 
 }

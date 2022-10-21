@@ -40,7 +40,12 @@
 
 								<div class="card card-primary card-outline">
 									<div class="card-body box-profile">
-										<div class="text-center">
+										<div class="text-center" th:if="${ film.cover == null }">
+											<img class="profile-user-img img-fluid img-circle"
+												src="/photos/movie.jpg"
+												alt="Actor/Director profile picture" />
+										</div>
+										<div class="text-center" th:if="${ film.cover != null }">
 											<img class="profile-user-img img-fluid img-circle"
 												th:src="@{${film.cover}}"
 												alt="Actor/Director profile picture" />
@@ -64,7 +69,12 @@
 
 									<div class="card-body">
 										<div class="card-body box-profile">
-											<div class="text-center">
+											<div class="text-center" th:if="${ realisateur.photo == null }">
+												<img class="profile-user-img img-fluid img-circle"
+													src="/photos/photoprofil.png"
+													alt="Actor/Director profile picture" />
+											</div>
+											<div class="text-center" th:if="${ realisateur.photo != null }">
 												<img class="profile-user-img img-fluid img-circle"
 													th:src="@{${realisateur.photo}}"
 													alt="Actor/Director profile picture" />
@@ -103,7 +113,12 @@
 													id="actors">
 													<div class="card-body col" th:each="acteur : ${acteurs}">
 														<div class="card-body box-profile">
-															<div class="text-center">
+															<div class="text-center" th:if="${ acteur.photo == null }">
+																<img class="profile-user-img img-fluid img-circle"
+																	src="/photos/photoprofil.png"
+																	alt="Actor/Director profile picture" />
+															</div>
+															<div class="text-center" th:if="${ acteur.photo != null }">
 																<img class="profile-user-img img-fluid img-circle"
 																	th:src="@{${acteur.photo}}"
 																	alt="Actor/Director profile picture" />
@@ -120,7 +135,7 @@
 															</ul>
 															<ul class="list-group list-group-unbordered mb-3">
 																<li class="list-group-item">
-																	<a th:href="${'/film/'+ film.id +'/actor/delete/' + acteur.id}">Delete</a>
+																	<a th:href="${'/film/'+ film.id +'/actor/delete/' + acteur.id}" type="button" class="btn btn-primary w-100">Delete</a>
 																</li>
 															</ul>
 														</div>
