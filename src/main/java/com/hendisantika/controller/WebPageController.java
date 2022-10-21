@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class WebPageController {
     @GetMapping("/")
     public String index() {
-        return "dashboard";
+    	return "redirect:film/lis";
     }
 
     @GetMapping("/login")

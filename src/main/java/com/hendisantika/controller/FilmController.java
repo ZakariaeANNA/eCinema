@@ -91,6 +91,16 @@ public class FilmController {
 		return "film/list";
 
 	}
+	@GetMapping(value = "/lis")
+	public String lis(Model model) {
+		List<Film> Anneee = filmService.getBytitre();
+
+	
+		model.addAttribute("listAnnes", Anneee);
+
+		return "film/lis";
+
+	}
 	
 	@GetMapping(value = "/album/delete/{id}")
 	public String list(@PathVariable("id") long id,Model model) {
