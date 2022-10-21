@@ -33,10 +33,12 @@ public class Seance extends AbstractModel<Long>{
     private Date dateProjection;
 	
 	@Column(name = "heure_debut")
-    private String heureDebut;
+	@Temporal(value = TemporalType.TIME)
+    private Date heureDebut;
 	
 	@Column(name = "heure_fin")
-    private String heureFin;
+	@Temporal(value = TemporalType.TIME)
+    private Date heureFin;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="Film_ID")

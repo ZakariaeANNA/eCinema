@@ -82,7 +82,6 @@ public class SeanceController {
 		model.addAttribute("lesSalles", lesSalles);
 		model.addAttribute("seance", seanceService.get(id));
 		return "seance/form";
-
 	}
 	
 	@PostMapping(value = "/save")
@@ -112,14 +111,6 @@ public class SeanceController {
 	@GetMapping(path = "/NG/listp", produces = "application/json")
 	public @ResponseBody List<Seance> getAllPersons() {
 		List<Seance> allSeances = new ArrayList<Seance>();
-//    	for (int i = 0; i < 5; i++) {
-//    		Personne p = new Personne();
-//    		p.setId((long) i);
-//    		p.setNom("Nom_"+i);
-//    		p.setPrenom("Prenom _"+i);
-//    		p.setTypePersonne("Type_"+1);
-//    		allPersons.add(p);
-//		}
 		allSeances = seanceService.getListAll();
 		return allSeances;
 	}
