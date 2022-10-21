@@ -226,7 +226,7 @@ public class FilmController {
 	@GetMapping("/{idFilm}/actor/delete/{idActor}")
 	public String deleteActor(@PathVariable("idActor") long idActor,@PathVariable("idFilm") long idFilm) {
 		filmService.deleteActorFromFilm(idActor, idFilm);
-		return "film/list";
+		return "redirect:film/details/"+idFilm;
 	}
     
     @GetMapping("/details/{id}")
@@ -235,7 +235,6 @@ public class FilmController {
     	Personne director = film.getRealisateur();
     	List<Personne> actors = film.getActeurs(); 
     	List<Media> medias = film.getMedias();
-    	//film.getRealisateur().getNom()
 		Time date = new Time(film.getDuree()*60*1000);
 		String formattedDate = new SimpleDateFormat("HH:mm:ss").format(date);
 		model.addAttribute("medias", medias);
@@ -245,13 +244,5 @@ public class FilmController {
         model.addAttribute("acteurs",actors);
         return "film/details";
     }
-//    @GetMapping("/getrecentmovies")
-//    public String getRecentMovies() {
-//    	List<Film> allFilms = filmService.getListAll();
-//    	
-//    	List<Film> recentFilms = new ArrayList<Film>();
-//    	
-//    	return "/dashboard";
-//    }
    
 }
