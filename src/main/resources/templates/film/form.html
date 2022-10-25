@@ -79,7 +79,7 @@
 							class="profile-user-img img-responsive m-2"
 							th:src="@{*{cover}}" alt="Actor/Director profile picture">
 					</div>
-					<div class="form-group" th:if="${film.id == null}">
+					<div class="form-group">
 						<label for="photo">Albums</label> <input type="file"
 							class="form-control" name="album" id="photo" multiple />
 						<div th:if="${film.cover == null}">Aucune photo...</div>

@@ -4,6 +4,7 @@
 	layout:decorate="shared/layout">
 <head>
 <title>Details Actor - Director</title>
+<link rel="stylesheet" th:href="@{/css/personnedetail.css}">
 </head>
 <body>
 	<section layout:fragment="header">
@@ -111,12 +112,12 @@
 													<div class="card-body col" th:each="acteur : ${acteurs}">
 														<div class="card-body box-profile">
 															<div class="text-center" th:if="${ acteur.photo == null }">
-																<img class="profile-user-img img-fluid img-circle"
+																<img class="profile-user-img img-fluid img-circle customStyleImageCard"
 																	src="/photos/photoprofil.png"
 																	alt="Actor/Director profile picture" />
 															</div>
 															<div class="text-center" th:if="${ acteur.photo != null }">
-																<img class="profile-user-img img-fluid img-circle"
+																<img class="profile-user-img img-fluid img-circle customStyleImageCard"
 																	th:src="@{${acteur.photo}}"
 																	alt="Actor/Director profile picture" />
 															</div>
