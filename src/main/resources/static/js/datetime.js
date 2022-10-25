@@ -6,11 +6,9 @@
         minDate: new Date(),
     })
     //Timepicker
-    $('#timepicker').datetimepicker({
-        pickSeconds: false,
-        pick12HourFormat: false 
-    })
+
     $('#timepickerfin').datetimepicker({
+		format: 'HH:mm',
         pick12HourFormat: false,
     })
   })

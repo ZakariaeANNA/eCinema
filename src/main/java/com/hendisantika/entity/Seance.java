@@ -30,14 +30,17 @@ public class Seance extends AbstractModel<Long>{
 
 	@Column(name = "date_projection")
 	@Temporal(value = TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-mm-dd")
     private Date dateProjection;
 	
 	@Column(name = "heure_debut")
 	@Temporal(value = TemporalType.TIME)
+	@DateTimeFormat(pattern = "HH:mm")
     private Date heureDebut;
 	
 	@Column(name = "heure_fin")
 	@Temporal(value = TemporalType.TIME)
+	@DateTimeFormat(pattern = "HH:mm")
     private Date heureFin;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
@@ -47,11 +50,5 @@ public class Seance extends AbstractModel<Long>{
 	@ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name="salle_ID")
     private Salle salle;
-//	public void setTimeDebutString(String timeDebut) {
-//		this.heureDebut = java.sql.Time.valueOf(timeDebut);
-//	}
-//	public void setTimeFinString(String timeFin) {
-//		this.heureFin = java.sql.Time.valueOf(timeFin);
-//	}
 
 }

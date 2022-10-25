@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         userDetailsManager.createUser(theAdmin);
         userDetailsManager.createUser(theUser);
         userDetailsManager.createUser(theManager);
-
+        
         return userDetailsManager;
     }
 

@@ -65,53 +65,31 @@
 						</div>
 						<div class="form-group">
 							<label>Date de projection : </label>
-							<div class="input-group date" id="reservationdate"
-								data-target-input="nearest">
-								<input type="text" th:field="*{dateProjection}"
-									class="form-control datetimepicker-input"
-									data-target="#reservationdate">
-								<div class="input-group-append" data-target="#reservationdate"
-									data-toggle="datetimepicker">
-									<div class="input-group-text">
-										<i class="fa fa-calendar"></i>
-									</div>
-								</div>
+							<div class="input-group date">
+								<input type="date" value="2022-12-28"
+									th:field="*{dateProjection}" class="form-control" required>
 							</div>
 						</div>
 						<div class="bootstrap-timepicker">
 							<div class="form-group">
 								<label>Heure de debut :</label>
-								<div class="input-group date" id="timepicker"
-									data-target-input="nearest">
-									<input type="text" name="timedebut" th:field="*{heureDebut}"
-										class="form-control datetimepicker-input"
-										data-target="#timepicker">
-									<div class="input-group-append" data-target="#timepicker"
-										data-toggle="datetimepicker">
-										<div class="input-group-text">
-											<i class="far fa-clock"></i>
-										</div>
-									</div>
+								<div class="input-group">
+									<input type="time" name="timedebut" th:field="*{heureDebut}"
+										class="form-control" required>
 								</div>
 							</div>
 						</div>
 						<div class="bootstrap-timepicker">
 							<div class="form-group">
 								<label>Heure de fin : </label>
-								<div class="input-group date" id="timepickerfin"
-									data-target-input="nearest">
-									<input type="text" th:field="*{heureFin}"
-										class="form-control datetimepicker-input"
-										data-target="#timepickerfin">
-									<div class="input-group-append" data-target="#timepickerfin"
-										data-toggle="datetimepicker">
-										<div class="input-group-text">
-											<i class="far fa-clock"></i>
-										</div>
-									</div>
+								<div class="input-group date" data-target-input="nearest">
+									<input type="time" th:field="*{heureFin}" class="form-control"
+										required>
 								</div>
 							</div>
 						</div>
+						<div th:if="${error}" class="alert alert-danger"
+							th:text="${error}" role="alert"></div>
 						<div class="box-footer">
 							<button class="btn btn-primary" type="submit">Enregistrer</button>
 						</div>
@@ -121,7 +99,6 @@
 			</div>
 		</div>
 	</div>
-
 </body>
 </html>
 <script th:src="@{/js/datetime.js}"></script>

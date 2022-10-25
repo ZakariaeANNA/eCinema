@@ -35,7 +35,7 @@ public class SeanceController {
 	private FilmService filmService;
 
 	@Autowired
-	public void setSeanceService(FilmService filmService,SeanceService seanceService,SalleService salleService) {
+	public void setSeanceService(FilmService filmService, SeanceService seanceService, SalleService salleService) {
 		this.seanceService = seanceService;
 		this.salleService = salleService;
 		this.filmService = filmService;
@@ -43,7 +43,7 @@ public class SeanceController {
 
 	@GetMapping
 	public String index() {
-		return "redirect:/seance/show/list";
+		return "redirect:/seance/1";
 	}
 
 	@GetMapping(value = "/{pageNumber}")
@@ -53,12 +53,12 @@ public class SeanceController {
 		int current = page.getNumber() + 1;
 		int begin = Math.max(1, current - 5);
 		int end = Math.min(begin + 10, page.getTotalPages());
-
+		
 		model.addAttribute("listSeances", page);
 		model.addAttribute("beginIndex", begin);
 		model.addAttribute("endIndex", end);
 		model.addAttribute("currentIndex", current);
-
+		
 		return "seance/list";
 
 	}
@@ -83,13 +83,19 @@ public class SeanceController {
 		model.addAttribute("seance", seanceService.get(id));
 		return "seance/form";
 	}
-	
+
 	@PostMapping(value = "/save")
-	public String save(Seance seance, final RedirectAttributes ra) {
-		Seance save = seanceService.save(seance);
+	public String save(Seance seance, final RedirectAttributes ra, Model model) {
+		System.out.println(
+				seanceService.isRoomFree(seance.getDateProjection(), seance.getHeureDebut(), seance.getHeureFin()));
+		if (!seanceService.isRoomFree(seance.getDateProjection(), seance.getHeureDebut(), seance.getHeureFin())) {
+			Seance save = seanceService.save(seance);
+		} else {
+			ra.addFlashAttribute("error", "The room is already reserved in this periode of time ");
+			return "redirect:/seance/add";
+		}
 		ra.addFlashAttribute("successFlash", "Seance Ajoutée avec succès");
 		return "redirect:/seance";
-
 	}
 
 	@GetMapping("/delete/{id}")
@@ -103,7 +109,7 @@ public class SeanceController {
 	@GetMapping("/show/list")
 	public String showSeances(Model model) {
 		List<Seance> lesSeances = seanceService.getListAll();
-		model.addAttribute("listSeances",lesSeances);
+		model.addAttribute("listSeances", lesSeances);
 		return "/seance/list";
 
 	}
@@ -114,16 +120,4 @@ public class SeanceController {
 		allSeances = seanceService.getListAll();
 		return allSeances;
 	}
-
-//	@RequestMapping(value = "/ng/get", params = { "page", "size" }, method = RequestMethod.GET)
-//	public @ResponseBody Page<Seance> findPaginated(@RequestParam("page") int page, @RequestParam("size") int size) {
-//
-//		Page<Seance> resultPage = ((SeanceController) seanceService).findPaginated(page, size);
-//		if (page > resultPage.getTotalPages()) {
-//			//throw new MyResourceNotFoundException();
-//			System.err.println("Numero de page incorrect");
-//		}
-//
-//		return resultPage;
-//	}
 }

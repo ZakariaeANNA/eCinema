@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.hendisantika.entity.Personne;
+import com.hendisantika.entity.Personne.TypePersonne;
 import com.hendisantika.service.NationaliteService;
 import com.hendisantika.service.PersonneService;
 import com.hendisantika.util.FileUploadUtil;
@@ -117,7 +118,14 @@ public class PersonneController {
     
     @GetMapping("/details/{id}")
     public String showDetails(@PathVariable Long id, Model model) {
-        model.addAttribute("personne", personneService.get(id));
+    	Personne personne = personneService.get(id);
+    	if(personne.getTypePersonne().equals(TypePersonne.REALISATEUR))
+    	{
+    		model.addAttribute("movies",personne.getFilmsRealises());
+    	}else {
+    		model.addAttribute("movies",personne.getFilms());
+    	}
+        model.addAttribute("personne",personne);
         return "personne/details";
 
     }
@@ -128,6 +136,13 @@ public class PersonneController {
     	allPersons = personneService.getListAll();
         model.addAttribute("listPersonnes", allPersons);
         return "personne/list";
+    }
+    
+    @GetMapping("/{idperson}/delete/film/{id}")
+    public String deleteFilmPersonne(@PathVariable("id") long id,@PathVariable("idperson") long idperson) {
+    	System.out.println(id+"id film "+idperson+"id personne");
+    	personneService.deleteFilmPersonne(id, idperson);
+    	return "redirect:/personne/details/"+idperson;
     }
     
     @GetMapping(path="/NG/listp", produces = "application/json")

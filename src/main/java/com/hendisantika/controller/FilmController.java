@@ -50,7 +50,7 @@ public class FilmController {
 		this.filmService = filmService;
 
 	}
-	
+
 	@Autowired
 	public void setMediaService(MediaService mediaService) {
 		this.mediaService = mediaService;
@@ -91,33 +91,33 @@ public class FilmController {
 		return "film/list";
 
 	}
-	
+
 	@GetMapping(value = "/album/delete/{id}")
-	public String list(@PathVariable("id") long id,Model model) {
+	public String list(@PathVariable("id") long id, Model model) {
 		List<Media> medias = filmService.get(id).getMedias();
-		model.addAttribute("medias",medias);
+		model.addAttribute("medias", medias);
 		return "film/deletealbum";
 
 	}
-	
+
 	@GetMapping(value = "/album/add/{id}")
-	public String add(@PathVariable("id") long id,Model model) {
+	public String add(@PathVariable("id") long id, Model model) {
 		Film film = filmService.get(id);
-		model.addAttribute("film",film);
+		model.addAttribute("film", film);
 		return "film/addalbum";
 
 	}
-	
+
 	@GetMapping(value = "/delete/media/{id}")
 	public String mediaDelete(@PathVariable("id") long id) {
 		mediaService.deleteMediaById(id);
 		return "redirect:/film";
 	}
-	
+
 	@PostMapping(value = "/add/media")
 	public String mediaAdd(@RequestParam("album") MultipartFile[] albums, @RequestParam("id") String id) {
 		Film film = filmService.get(Long.valueOf(id));
-		for( int i = 0 ; i < albums.length ; i++ ) {
+		for (int i = 0; i < albums.length; i++) {
 			if (!albums[i].isEmpty()) {
 				Media media = new Media();
 				// normalize the file path
@@ -125,7 +125,7 @@ public class FilmController {
 				String uuid = UUID.randomUUID().toString();
 				String uploadDir = "albums\\";
 				FileUploadUtil.saveFile(uploadDir, uuid + fileName, albums[i]);
-				media.setTypeMedia(TypeMedia.IMAGE); 
+				media.setTypeMedia(TypeMedia.IMAGE);
 				media.setMedia("/photos/albums/" + uuid + fileName);
 				media.setFilm(film);
 				mediaService.save(media);
@@ -133,7 +133,6 @@ public class FilmController {
 		}
 		return "redirect:/film";
 	}
-	
 
 	@GetMapping("/add")
 	public String add(Model model) {
@@ -146,7 +145,7 @@ public class FilmController {
 		allNationalites = nationaliteService.getListAll();
 		List<Personne> lesActeurs = new ArrayList<Personne>();
 		lesActeurs = personneService.getActeurs();
-		
+
 		model.addAttribute("listActeurs", lesActeurs);
 		model.addAttribute("listeNationalites", allNationalites);
 		model.addAttribute("listegenres", allGenres);
@@ -175,20 +174,21 @@ public class FilmController {
 	}
 
 	@PostMapping(value = "/save")
-	public String save(@RequestParam("file") MultipartFile file, @RequestParam("album") MultipartFile[] albums, Film film,final RedirectAttributes ra) {
+	public String save(@RequestParam("file") MultipartFile file, @RequestParam("album") MultipartFile[] albums,
+			Film film, final RedirectAttributes ra) {
 		List<Media> medias = new ArrayList<Media>();
-		if((film.getId() == null || film.getId() != null) && !file.isEmpty()) {
-				// normalize the file path
-				String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-				String uuid = UUID.randomUUID().toString();
-				String uploadDir = "covers\\";
-				FileUploadUtil.saveFile(uploadDir, uuid + fileName, file);
-				film.setCover("/photos/covers/" + uuid + fileName);
-		}else if(film.getId() != null && file.isEmpty()){
+		if ((film.getId() == null || film.getId() != null) && !file.isEmpty()) {
+			// normalize the file path
+			String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+			String uuid = UUID.randomUUID().toString();
+			String uploadDir = "covers\\";
+			FileUploadUtil.saveFile(uploadDir, uuid + fileName, file);
+			film.setCover("/photos/covers/" + uuid + fileName);
+		} else if (film.getId() != null && file.isEmpty()) {
 			film.setCover(filmService.get(film.getId()).getCover());
 		}
 		Film save = filmService.save(film);
-		for( int i = 0 ; i < albums.length ; i++ ) {
+		for (int i = 0; i < albums.length; i++) {
 			if (!albums[i].isEmpty()) {
 				Media media = new Media();
 				// normalize the file path
@@ -196,7 +196,7 @@ public class FilmController {
 				String uuid = UUID.randomUUID().toString();
 				String uploadDir = "albums\\";
 				FileUploadUtil.saveFile(uploadDir, uuid + fileName, albums[i]);
-				media.setTypeMedia(TypeMedia.IMAGE); 
+				media.setTypeMedia(TypeMedia.IMAGE);
 				media.setMedia("/photos/albums/" + uuid + fileName);
 				media.setFilm(save);
 				mediaService.save(media);
@@ -222,27 +222,27 @@ public class FilmController {
 		return "film/list";
 
 	}
-	
+
 	@GetMapping("/{idFilm}/actor/delete/{idActor}")
-	public String deleteActor(@PathVariable("idActor") long idActor,@PathVariable("idFilm") long idFilm) {
+	public String deleteActor(@PathVariable("idActor") long idActor, @PathVariable("idFilm") long idFilm) {
 		filmService.deleteActorFromFilm(idActor, idFilm);
-		return "redirect:film/details/"+idFilm;
+		return "redirect:/film/details/" + idFilm;
 	}
-    
-    @GetMapping("/details/{id}")
-    public String showDetails(@PathVariable Long id, Model model) {
-    	Film film = filmService.get(id);
-    	Personne director = film.getRealisateur();
-    	List<Personne> actors = film.getActeurs(); 
-    	List<Media> medias = film.getMedias();
-		Time date = new Time(film.getDuree()*60*1000);
+
+	@GetMapping("/details/{id}")
+	public String showDetails(@PathVariable Long id, Model model) {
+		Film film = filmService.get(id);
+		Personne director = film.getRealisateur();
+		List<Personne> actors = film.getActeurs();
+		List<Media> medias = film.getMedias();
+		Time date = new Time(film.getDuree() * 60 * 1000);
 		String formattedDate = new SimpleDateFormat("HH:mm:ss").format(date);
 		model.addAttribute("medias", medias);
-		model.addAttribute("time",formattedDate);
-        model.addAttribute("film",film);
-        model.addAttribute("realisateur",director);
-        model.addAttribute("acteurs",actors);
-        return "film/details";
-    }
-   
+		model.addAttribute("time", formattedDate);
+		model.addAttribute("film", film);
+		model.addAttribute("realisateur", director);
+		model.addAttribute("acteurs", actors);
+		return "film/details";
+	}
+
 }
