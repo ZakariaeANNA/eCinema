@@ -91,6 +91,17 @@ public class FilmController {
 		return "film/list";
 
 	}
+	@GetMapping(value = "/lis")
+	public String lis(Model model) {
+		List<Film> Anneee = filmService.getBytitre();
+
+	
+		model.addAttribute("listAnnes", Anneee);
+
+		return "film/lis";
+
+	}
+	
 
 	@GetMapping(value = "/album/delete/{id}")
 	public String list(@PathVariable("id") long id, Model model) {
@@ -226,7 +237,7 @@ public class FilmController {
 	@GetMapping("/{idFilm}/actor/delete/{idActor}")
 	public String deleteActor(@PathVariable("idActor") long idActor, @PathVariable("idFilm") long idFilm) {
 		filmService.deleteActorFromFilm(idActor, idFilm);
-		return "redirect:/film/details/" + idFilm;
+		return "redirect:/film/details/"+idFilm;
 	}
 
 	@GetMapping("/details/{id}")

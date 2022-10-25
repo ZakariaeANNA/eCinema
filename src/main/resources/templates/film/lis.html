@@ -1,0 +1,58 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="shared/layout">
+<head>
+<title>Aflami - افلامي | Movies</title>
+</head>
+<body>
+	<section layout:fragment="header">
+		<h1>Movies</h1>
+		<ol class="breadcrumb">
+			<li><a href="/"><i class="fa fa-dashboard"></i> Dashboard</a></li>
+			<li class="active">Dashboard</li>
+		</ol>
+	</section>
+	<div layout:fragment="content">
+		<div class="box p-4">
+			<div class="box-header with-border">
+				<h3 class="box-title">Last Movies</h3>
+
+			</div>
+			<div class="card-body">
+
+				<div id="carouselExampleControls" class="carousel slide"
+					data-ride="carousel">
+					<div class="carousel-inner">
+						<div class="carousel-item" th:each="afilm : ${listAnnes}"
+							th:classappend="${ afilmStat.index == 0 } ? 'active' : ''">
+							<img class="d-block w-100" alt="First slide"
+								th:src="@{${afilm.cover}}"> <a
+								th:href="${'/film/details/' + afilm.id}">
+								<div class="carousel-caption d-none d-md-block"
+									style="padding: 10px; box-shadow: 5px 10px 20px black inset; border-color: transparent; background-color: black; opacity: 70%;">
+									<h2 th:text="${afilm.titre}"></h2>
+									<p th:text="${afilm.annee}"></p>
+								</div>
+							</a>
+						</div>
+
+					</div>
+					<a class="carousel-control-prev" href="#carouselExampleControls"
+						role="button" data-slide="prev"> <span
+						class="carousel-control-prev-icon" aria-hidden="true"></span> <span
+						class="sr-only">Previous</span>
+					</a> <a class="carousel-control-next" href="#carouselExampleControls"
+						role="button" data-slide="next"> <span
+						class="carousel-control-next-icon" aria-hidden="true"></span> <span
+						class="sr-only">Next</span>
+					</a>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+</body>
+</html>

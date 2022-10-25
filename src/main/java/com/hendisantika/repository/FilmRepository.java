@@ -1,5 +1,7 @@
 package com.hendisantika.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.stereotype.Repository;
@@ -12,5 +14,6 @@ import com.hendisantika.entity.Film;
 @Repository
 @RepositoryRestResource
 public interface FilmRepository extends JpaRepository<Film, Long> {
+	List<Film> findByOrderByAddedDateDesc();
 
 }
