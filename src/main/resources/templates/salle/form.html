@@ -23,7 +23,6 @@
         <form data-toggle="validator" role="form" th:object="${salle}" th:action="@{/salle/save}" method="post">
             <div class="box-body">
                 <input type="hidden" th:field="*{id}"/>
-
                 <div class="form-group">
                     <label for="Numero">Numero :</label>
                     <input type="text" required="true" class="form-control" th:field="*{numero}" id="Numero" />
